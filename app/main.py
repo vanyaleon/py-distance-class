@@ -10,13 +10,13 @@ class Distance:
         return f"Distance(km={self.km})"
 
     def __add__(self, other):
-        if type(other) == int:
+        if isinstance(other, int):
             return Distance(self.km + other)
         else:
             return Distance(self.km + other.km)
 
     def __iadd__(self, other):
-        if type(other) == int:
+        if isinstance(other, int):
             self.km += other
             return self
         else:
@@ -24,69 +24,33 @@ class Distance:
             return self
 
     def __mul__(self, other):
-        if type(other) == int:
+        if isinstance(other, int):
             return Distance(self.km * other)
         else:
             return Distance(self.km * other.km)
 
     def __truediv__(self, divider):
-        if type(divider) == int or float:
+        if isinstance(divider, (int, float)):
             return Distance(round(self.km / divider, 2))
 
     def __lt__(self, other):
-        if type(other) == int:
-            if self.km < other:
-                return True
-            else:
-                return False
-        if self.km < other.km:
-            return True
-        else:
-            return False
+        if isinstance(other, (int, float)):
+            return self.km < other
+        return self.km < other.km
 
     def __gt__(self, other):
-        if type(other) == int:
-            if self.km > other:
-                return True
-            else:
-                return False
-        if self.km > other.km:
-            return True
-        else:
-            return False
+        return not self <= other
 
     def __eq__(self, other):
-        if type(other) == int:
-            if self.km == other:
-                return True
-            else:
-                return False
-        if self.km == other.km:
-            return True
-        else:
-            return False
+        if isinstance(other, int):
+            return self.km == other
+        return self.km == other.km
 
     def __le__(self, other):
-        if type(other) == int:
-            if self.km <= other:
-                return True
-            else:
-                return False
-        if self.km <= other.km:
-            return True
-        else:
-            return False
+        return self.__eq__(other) or self.__lt__(other)
 
     def __ge__(self, other):
-        if type(other) == int:
-            if self.km >= other:
-                return True
-            else:
-                return False
-        if self.km >= other.km:
-            return True
-        else:
-            return False
+        return self.__eq__(other) or self.__gt__(other)
 
     def __len__(self):
         return self.km
