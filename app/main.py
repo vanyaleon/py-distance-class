@@ -39,7 +39,9 @@ class Distance:
         return self.km < other.km
 
     def __gt__(self, other):
-        return not self <= other
+        if isinstance(other, (int, float)):
+            return self.km > other
+        return self.km > other.km
 
     def __eq__(self, other):
         if isinstance(other, int):
